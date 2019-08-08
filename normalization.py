@@ -7,7 +7,6 @@ def batch_normal(x, gamma, beta, bn_params, momentum=0.9, eps=1e-5):
     gamma, beta: 论文中的两个可学习参数
     bn_params: 保留的前面的均值和方差，test用
     momentum: 给均值和方差加窗平均
-    
     """
     mean = np.mean(x, axis=(0,2,3), keepdims=True)
     var = np.var(x, axis=(0,2,3), keepdims=True)
@@ -31,7 +30,6 @@ def group_normal(x, gamma, beta, G, eps=1e-5):
     x1 = x.reshape((N, G, C//G, H, W))
     mean = np.mean(x1, axis=(2, 3, 4), keepdims=True)
     var = np.var(x1, axis=(2, 3, 4), keepdims=True)
-    
     x_normal = (x1-mean)/np.sqrt(var+eps)
     result = gamma*x_normal + beta
     result.resize((N, C, H, W))
